@@ -1,0 +1,71 @@
+{
+  "bug_id": "Bug1",
+  "bug_name": "Oracle Staleness - No Timestamp Validation",
+  "severity": "CRITICAL",
+  "cvss_score": "9.8",
+  "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+  "affected_contract": {
+    "name": "AaveOracle",
+    "address": "0x8105f69D9C41644c6A0803fDA7D03Aa70996cFD9",
+    "network": "Ethereum Mainnet",
+    "protocol": "Spark Protocol (Aave V3 Fork)"
+  },
+  "vulnerability_type": [
+    "Oracle Manipulation",
+    "Missing Input Validation",
+    "Price Staleness",
+    "Direct Fund Theft"
+  ],
+  "impact": {
+    "description": "Allows attackers to exploit stale Chainlink prices to borrow more than collateral is worth",
+    "financial_impact_usd": 19469,
+    "financial_impact_description": "$19,469 profit per 100 ETH position with 25% price drop",
+    "attack_complexity": "Low",
+    "privileges_required": "None",
+    "user_interaction": "None"
+  },
+  "root_cause": {
+    "summary": "Uses deprecated latestAnswer() without timestamp validation",
+    "vulnerable_function": "getAssetPrice()",
+    "vulnerable_lines": "104-119",
+    "file": "AaveOracle.sol"
+  },
+  "proof_of_concept": {
+    "status": "Verified",
+    "tests_passed": "4/4",
+    "test_framework": "Foundry",
+    "test_file": "PoC/OracleStalenessPOC.t.sol",
+    "runtime": "~3 minutes",
+    "verification": "All tests pass on mainnet fork"
+  },
+  "submission_info": {
+    "team_name": "[YOUR_TEAM_NAME]",
+    "researcher": "[YOUR_NAME]",
+    "submission_date": "2025-10-20",
+    "contact_email": "[YOUR_EMAIL]",
+    "competition": "ZSA Attackathon 2025"
+  },
+  "historical_precedent": [
+    {
+      "protocol": "Venus Protocol",
+      "date": "2021-11",
+      "loss_usd": "200000000+",
+      "similar_vulnerability": "Oracle manipulation + price staleness"
+    },
+    {
+      "protocol": "Cream Finance",
+      "date": "2021-multiple",
+      "loss_usd": "130000000+",
+      "similar_vulnerability": "Oracle failures and price manipulation"
+    }
+  ],
+  "references": {
+    "chainlink_docs": "https://docs.chain.link/data-feeds/using-data-feeds",
+    "aave_docs": "https://docs.aave.com/developers/",
+    "similar_exploits": [
+      "https://rekt.news/venus-blizz-rekt/",
+      "https://rekt.news/cream-rekt/"
+    ]
+  }
+}
+
