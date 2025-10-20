@@ -1,0 +1,22 @@
+# Test-Only Foundry Configuration
+# Use this to run tests without compiling all src contracts
+
+[profile.default]
+src = "test"  # Only compile test files
+out = "out"
+libs = ["lib"]
+test = "test"
+cache_path = "cache"
+
+# Use via-ir to solve stack too deep issues
+via_ir = true
+optimizer = true
+optimizer_runs = 200
+
+# For mainnet fork tests
+[rpc_endpoints]
+mainnet = "${MAINNET_RPC_URL}"
+
+[etherscan]
+mainnet = { key = "${ETHERSCAN_API_KEY}" }
+
